@@ -1,0 +1,375 @@
+about:
+  date: October 13, 2024 20:28:55
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 12
+  number_tables: 13
+info_toggle_checked: true
+resources:
+  AnalystRating:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+      required: true
+    - name: date
+      required: true
+    - name: rating
+      required: true
+    description: Table for storing analyst ratings for stocks.
+    info_list: Table for storing analyst ratings for stocks.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: AnalystRating
+    user_key: id
+  Dividend:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+      required: true
+    - name: date
+      required: true
+    - name: amount
+      required: true
+    description: Table for tracking dividends issued by stocks.
+    info_list: Table for tracking dividends issued by stocks.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: Dividend
+    user_key: id
+  FinancialReport:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+      required: true
+    - name: quarter
+      required: true
+    - name: year
+      required: true
+    - name: revenue
+      required: true
+    - name: profit
+      required: true
+    description: Table for storing quarterly financial reports of stocks.
+    info_list: Table for storing quarterly financial reports of stocks.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: FinancialReport
+    user_key: id
+  MarketIndexComponent:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: index_id
+      required: true
+    - name: stock_id
+      required: true
+    description: Table associating stocks with market indices.
+    info_list: Table associating stocks with market indices.
+    tab_groups:
+    - direction: toone
+      fks:
+      - index_id
+      name: index
+      resource: MarketIndice
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: MarketIndexComponent
+    user_key: id
+  MarketIndice:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Table for different market indices and their components.
+    info_list: Table for different market indices and their components.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - index_id
+      name: MarketIndexComponentList
+      resource: MarketIndexComponent
+    type: MarketIndice
+    user_key: name
+  News:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+      required: true
+    - name: date
+      required: true
+    - name: headline
+      required: true
+    - name: content
+    description: Table for news articles related to stocks.
+    info_list: Table for news articles related to stocks.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: News
+    user_key: id
+  Portfolio:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Table representing user portfolios.
+    info_list: Table representing user portfolios.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - portfolio_id
+      name: PortfolioStockList
+      resource: PortfolioStock
+    type: Portfolio
+    user_key: name
+  PortfolioStock:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: portfolio_id
+      required: true
+    - name: stock_id
+      required: true
+    - name: quantity
+      required: true
+    description: Table associating stocks with user portfolios, holding quantities.
+    info_list: Table associating stocks with user portfolios, holding quantities.
+    tab_groups:
+    - direction: toone
+      fks:
+      - portfolio_id
+      name: portfolio
+      resource: Portfolio
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: PortfolioStock
+    user_key: id
+  Stock:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: ticker
+      required: true
+    - name: id
+    description: Table for storing stock information, including stock ticker and name.
+    info_list: Table for storing stock information, including stock ticker and name.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - stock_id
+      name: AnalystRatingList
+      resource: AnalystRating
+    - direction: tomany
+      fks:
+      - stock_id
+      name: DividendList
+      resource: Dividend
+    - direction: tomany
+      fks:
+      - stock_id
+      name: FinancialReportList
+      resource: FinancialReport
+    - direction: tomany
+      fks:
+      - stock_id
+      name: MarketIndexComponentList
+      resource: MarketIndexComponent
+    - direction: tomany
+      fks:
+      - stock_id
+      name: NewsList
+      resource: News
+    - direction: tomany
+      fks:
+      - stock_id
+      name: PortfolioStockList
+      resource: PortfolioStock
+    - direction: tomany
+      fks:
+      - stock_id
+      name: StockPriceList
+      resource: StockPrice
+    - direction: tomany
+      fks:
+      - stock_id
+      name: StockVolumeList
+      resource: StockVolume
+    - direction: tomany
+      fks:
+      - stock_id
+      name: WatchlistStockList
+      resource: WatchlistStock
+    type: Stock
+    user_key: name
+  StockPrice:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+      required: true
+    - name: date
+      required: true
+    - name: open_price
+      required: true
+    - name: close_price
+      required: true
+    - name: high_price
+      required: true
+    - name: low_price
+      required: true
+    description: Table for daily stock prices with open, close, high, and low prices.
+    info_list: Table for daily stock prices with open, close, high, and low prices.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: StockPrice
+    user_key: id
+  StockVolume:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+      required: true
+    - name: date
+      required: true
+    - name: volume
+      required: true
+    description: Table for recording the trading volume of stocks.
+    info_list: Table for recording the trading volume of stocks.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: StockVolume
+    user_key: id
+  Watchlist:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Table for user watchlists, tracking stocks of interest.
+    info_list: Table for user watchlists, tracking stocks of interest.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - watchlist_id
+      name: WatchlistStockList
+      resource: WatchlistStock
+    type: Watchlist
+    user_key: name
+  WatchlistStock:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+      required: true
+    - name: watchlist_id
+      required: true
+    description: Table associating stocks with watchlists.
+    info_list: Table associating stocks with watchlists.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    - direction: toone
+      fks:
+      - watchlist_id
+      name: watchlist
+      resource: Watchlist
+    type: WatchlistStock
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

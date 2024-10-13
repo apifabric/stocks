@@ -1,0 +1,106 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table AnalystRating {
+    id INTEGER [primary key]
+    stock_id INTEGER 
+    date DATETIME 
+    rating VARCHAR 
+    }
+
+Table Stock {
+    id INTEGER [primary key]
+    ticker VARCHAR 
+    name VARCHAR 
+    }
+
+Table Dividend {
+    id INTEGER [primary key]
+    stock_id INTEGER 
+    date DATETIME 
+    amount FLOAT 
+    }
+
+Table FinancialReport {
+    id INTEGER [primary key]
+    stock_id INTEGER 
+    quarter VARCHAR 
+    year INTEGER 
+    revenue FLOAT 
+    profit FLOAT 
+    }
+
+Table MarketIndexComponent {
+    id INTEGER [primary key]
+    index_id INTEGER 
+    stock_id INTEGER 
+    }
+
+Table MarketIndice {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table News {
+    id INTEGER [primary key]
+    stock_id INTEGER 
+    date DATETIME 
+    headline VARCHAR 
+    content VARCHAR 
+    }
+
+Table Portfolio {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table PortfolioStock {
+    id INTEGER [primary key]
+    portfolio_id INTEGER 
+    stock_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table StockPrice {
+    id INTEGER [primary key]
+    stock_id INTEGER 
+    date DATETIME 
+    open_price FLOAT 
+    close_price FLOAT 
+    high_price FLOAT 
+    low_price FLOAT 
+    }
+
+Table StockVolume {
+    id INTEGER [primary key]
+    stock_id INTEGER 
+    date DATETIME 
+    volume INTEGER 
+    }
+
+Table Watchlist {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table WatchlistStock {
+    id INTEGER [primary key]
+    watchlist_id INTEGER 
+    stock_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: AnalystRating.(stock_id) < Stock.(id)
+    Ref: Dividend.(stock_id) < Stock.(id)
+    Ref: FinancialReport.(stock_id) < Stock.(id)
+    Ref: MarketIndexComponent.(index_id) < MarketIndice.(id)
+    Ref: MarketIndexComponent.(stock_id) < Stock.(id)
+    Ref: News.(stock_id) < Stock.(id)
+    Ref: PortfolioStock.(portfolio_id) < Portfolio.(id)
+    Ref: PortfolioStock.(stock_id) < Stock.(id)
+    Ref: StockPrice.(stock_id) < Stock.(id)
+    Ref: StockVolume.(stock_id) < Stock.(id)
+    Ref: WatchlistStock.(stock_id) < Stock.(id)
+    Ref: WatchlistStock.(watchlist_id) < Watchlist.(id)

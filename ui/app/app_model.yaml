@@ -1,0 +1,558 @@
+about:
+  date: October 13, 2024 20:28:55
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  AnalystRating:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: date
+      required: true
+      template: date
+      type: DATETIME
+    - name: rating
+      required: true
+      template: text
+      type: VARCHAR
+    description: Table for storing analyst ratings for stocks.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for storing analyst ratings for stocks.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: AnalystRating
+  Dividend:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: date
+      required: true
+      template: date
+      type: DATETIME
+    - name: amount
+      required: true
+      template: real
+      type: FLOAT
+    description: Table for tracking dividends issued by stocks.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for tracking dividends issued by stocks.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: Dividend
+  FinancialReport:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: quarter
+      required: true
+      template: text
+      type: VARCHAR
+    - name: year
+      required: true
+      template: integer
+      type: INTEGER
+    - name: revenue
+      required: true
+      template: real
+      type: FLOAT
+    - name: profit
+      required: true
+      template: real
+      type: FLOAT
+    description: Table for storing quarterly financial reports of stocks.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for storing quarterly financial reports of stocks.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: FinancialReport
+  MarketIndexComponent:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: index_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Table associating stocks with market indices.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table associating stocks with market indices.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - index_id
+      name: index
+      resource: MarketIndice
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: MarketIndexComponent
+  MarketIndice:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for different market indices and their components.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table for different market indices and their components.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - index_id
+      name: MarketIndexComponentList
+      resource: MarketIndexComponent
+    type: MarketIndice
+  News:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: date
+      required: true
+      template: date
+      type: DATETIME
+    - name: headline
+      required: true
+      template: text
+      type: VARCHAR
+    - name: content
+      template: text
+      type: VARCHAR
+    description: Table for news articles related to stocks.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for news articles related to stocks.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: News
+  Portfolio:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table representing user portfolios.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table representing user portfolios.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - portfolio_id
+      name: PortfolioStockList
+      resource: PortfolioStock
+    type: Portfolio
+  PortfolioStock:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: portfolio_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    description: Table associating stocks with user portfolios, holding quantities.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table associating stocks with user portfolios, holding quantities.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - portfolio_id
+      name: portfolio
+      resource: Portfolio
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: PortfolioStock
+  Stock:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ticker
+      required: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing stock information, including stock ticker and name.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table for storing stock information, including stock ticker and name.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - stock_id
+      name: AnalystRatingList
+      resource: AnalystRating
+    - direction: tomany
+      fks:
+      - stock_id
+      name: DividendList
+      resource: Dividend
+    - direction: tomany
+      fks:
+      - stock_id
+      name: FinancialReportList
+      resource: FinancialReport
+    - direction: tomany
+      fks:
+      - stock_id
+      name: MarketIndexComponentList
+      resource: MarketIndexComponent
+    - direction: tomany
+      fks:
+      - stock_id
+      name: NewsList
+      resource: News
+    - direction: tomany
+      fks:
+      - stock_id
+      name: PortfolioStockList
+      resource: PortfolioStock
+    - direction: tomany
+      fks:
+      - stock_id
+      name: StockPriceList
+      resource: StockPrice
+    - direction: tomany
+      fks:
+      - stock_id
+      name: StockVolumeList
+      resource: StockVolume
+    - direction: tomany
+      fks:
+      - stock_id
+      name: WatchlistStockList
+      resource: WatchlistStock
+    type: Stock
+  StockPrice:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: date
+      required: true
+      template: date
+      type: DATETIME
+    - name: open_price
+      required: true
+      template: real
+      type: FLOAT
+    - name: close_price
+      required: true
+      template: real
+      type: FLOAT
+    - name: high_price
+      required: true
+      template: real
+      type: FLOAT
+    - name: low_price
+      required: true
+      template: real
+      type: FLOAT
+    description: Table for daily stock prices with open, close, high, and low prices.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for daily stock prices with open, close, high, and low prices.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: StockPrice
+  StockVolume:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: date
+      required: true
+      template: date
+      type: DATETIME
+    - name: volume
+      required: true
+      template: integer
+      type: INTEGER
+    description: Table for recording the trading volume of stocks.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for recording the trading volume of stocks.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: StockVolume
+  Watchlist:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for user watchlists, tracking stocks of interest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table for user watchlists, tracking stocks of interest.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - watchlist_id
+      name: WatchlistStockList
+      resource: WatchlistStock
+    type: Watchlist
+  WatchlistStock:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: watchlist_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Table associating stocks with watchlists.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table associating stocks with watchlists.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    - direction: toone
+      fks:
+      - watchlist_id
+      name: watchlist
+      resource: Watchlist
+    type: WatchlistStock
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false
